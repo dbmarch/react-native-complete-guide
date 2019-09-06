@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet,View , FlatList} from 'react-native';
+import { StyleSheet, View, FlatList, Button} from 'react-native';
 import {isEmpty} from 'lodash'
 import Item from './components/Item'
 import ItemInput from './components/ItemInput'
@@ -7,12 +7,14 @@ import ItemInput from './components/ItemInput'
 // the key extractor below is only required if your data doesn't have the correct shape.
 export default function App() {
   const [list, setList] = useState([])
+  const [isAddMode, setIsAddMode] = useState(false)
 
   const addItemHandler = (item)=> {
     const key = Math.random().toString()
     if (!isEmpty(item) ){
       setList([...list, {key, value: item}])
     }
+    setIsAddMode(false);
   }
 
   const removeItemHandler= key => {
@@ -22,7 +24,8 @@ export default function App() {
 
   return (
     <View style = {styles.screen}>
-      <ItemInput placeholder="Shopping List" addItemHandler={addItemHandler}  ></ItemInput>
+      <Button title="Add Item" onPress={()=>setIsAddMode(true)}/>
+      <ItemInput placeholder="Shopping List" addItemHandler={addItemHandler} visible={isAddMode} ></ItemInput>
        <FlatList 
           data = {list} 
           renderItem= {itemData=>(
