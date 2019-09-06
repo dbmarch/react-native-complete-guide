@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, Button, View , ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, Button, View , ScrollView , FlatList} from 'react-native';
 import {isEmpty, map} from 'lodash'
 
+// the key extractor below is only required if your data doesn't have the correct shape.
 export default function App() {
   const [item, setItem]= useState('')
   const [list, setList] = useState([])
   const itemInputHandler = (enteredText) => setItem(enteredText)
   const addItemHandler = ()=> {
     if (!isEmpty(item) ){
-      setList([...list, item])
+      setList([...list, {key: Math.random.toString(), value: item}])
       setItem('')
     }
   }
@@ -24,14 +25,16 @@ export default function App() {
           />
         <Button title = "ADD" onPress={addItemHandler}/>
        </View>
-       <ScrollView>
-        {map(list, (item, index)=>(
-        <View  style={styles.listItem} key={index}  >
-          <Text >{item}</Text>
-         </View>))}
-        
-       </ScrollView>
-    </View>
+       <FlatList 
+          keyExtractor = {(item, index)=>item.key}  
+          data = {list} 
+          renderItem= {itemData=>(
+          <View style={styles.listItem}>
+            <Text>{itemData.item.value}</Text>
+          </View>
+          )}
+        />
+      </View>
   );
 }
 
