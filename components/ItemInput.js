@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import {View, TextInput, Button, StyleSheet, Modal} from 'react-native'
-import { AuthSession } from 'expo';
 
-const ItemInput = ( {placeholder,  addItemHandler, visible }) => {
+
+const ItemInput = ( {placeholder,  addItemHandler, visible, onCancel }) => {
    const [item, setItem]= useState('')
 
    const itemInputHandler = (enteredText) => setItem(enteredText)
@@ -16,14 +16,18 @@ const ItemInput = ( {placeholder,  addItemHandler, visible }) => {
            style = {styles.textInput}
            value = {item}
            />
-         <Button title = "ADD" onPress={()=>{
-            addItemHandler(item)
-            setItem('')} } />
+          <View style = {styles.buttonTray}>
+            <Button title = "CANCEL" 
+               color = 'red' 
+               onPress={onCancel}/>
+            <Button title = "ADD" onPress={()=>{
+               addItemHandler(item)
+               setItem('')} } />
+          </View>
        </View>
     </Modal>
    )
 }
-
 
 const styles = StyleSheet.create({
    modal: {
@@ -41,6 +45,11 @@ const styles = StyleSheet.create({
      borderBottomWidth: 1, 
      padding: 10, 
      width: '80%'},
+    buttonTray: {
+      flexDirection: 'row', 
+      justifyContent: 'space-evenly',
+      width: '80%'
+     }
    })
 
 

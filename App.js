@@ -22,10 +22,12 @@ export default function App() {
     setList(newList)
   }
 
+  const cancelHandler = () => setIsAddMode(false)
+
   return (
     <View style = {styles.screen}>
       <Button title="Add Item" onPress={()=>setIsAddMode(true)}/>
-      <ItemInput placeholder="Shopping List" addItemHandler={addItemHandler} visible={isAddMode} ></ItemInput>
+      <ItemInput placeholder="Shopping List" addItemHandler={addItemHandler} visible={isAddMode} onCancel={cancelHandler}></ItemInput>
        <FlatList 
           data = {list} 
           renderItem= {itemData=>(
