@@ -17,12 +17,16 @@ const ItemInput = ( {placeholder,  addItemHandler, visible, onCancel }) => {
            value = {item}
            />
           <View style = {styles.buttonTray}>
-            <Button title = "CANCEL" 
-               color = 'red' 
-               onPress={onCancel}/>
-            <Button title = "ADD" onPress={()=>{
-               addItemHandler(item)
-               setItem('')} } />
+            <View style = {styles.button}>
+               <Button title = "CANCEL" 
+                  color = 'red' 
+                  onPress={onCancel}/>
+           </View>
+           <View style = {styles.button}>
+               <Button title = "ADD" onPress={()=>{
+                  addItemHandler(item)
+                  setItem('')} } />
+          </View>
           </View>
        </View>
     </Modal>
@@ -49,6 +53,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row', 
       justifyContent: 'space-evenly',
       width: '80%'
+     },
+     button: {
+        width: '40%'
      }
    })
 
