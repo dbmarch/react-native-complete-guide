@@ -15,13 +15,18 @@ export default function App() {
     }
   }
 
+  const removeItemHandler= key => {
+    const newList = list.filter(item=> item.key != key )
+    setList(newList)
+  }
+
   return (
     <View style = {styles.screen}>
       <ItemInput placeholder="Shopping List" addItemHandler={addItemHandler}  ></ItemInput>
        <FlatList 
           data = {list} 
           renderItem= {itemData=>(
-            <Item item = {itemData.item.value} onDelete={console.info('DELETE')} />
+            <Item item = {itemData.item} onDelete={removeItemHandler} />
           )}
         />
       </View>

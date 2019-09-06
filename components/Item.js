@@ -1,13 +1,13 @@
 import React from 'react'
-import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback } from 'react-native'
 
 const Item = ({item, onDelete}) =>{
    return  (
-   <TouchableOpacity activeOpacity={0.8} onPress={onDelete}>
+   <TouchableNativeFeedback onPress={()=>onDelete(item.key)}>
      <View style={styles.listItem}>
-        <Text>{item}</Text>
+        <Text>{item.value}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableNativeFeedback>
    )
 }
 
