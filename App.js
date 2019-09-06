@@ -1,37 +1,27 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, Button, View , ScrollView , FlatList} from 'react-native';
-import {isEmpty, map} from 'lodash'
+import { StyleSheet,View , FlatList} from 'react-native';
+import {isEmpty} from 'lodash'
+import Item from './components/Item'
+import ItemInput from './components/ItemInput'
 
 // the key extractor below is only required if your data doesn't have the correct shape.
 export default function App() {
-  const [item, setItem]= useState('')
   const [list, setList] = useState([])
-  const itemInputHandler = (enteredText) => setItem(enteredText)
-  const addItemHandler = ()=> {
+
+  const addItemHandler = (item)=> {
+    const key = Math.random().toString()
     if (!isEmpty(item) ){
-      setList([...list, {key: Math.random.toString(), value: item}])
-      setItem('')
+      setList([...list, {key, value: item}])
     }
   }
 
   return (
     <View style = {styles.screen}>
-      <View style = {styles.inputContainer}>
-        <TextInput 
-          placeholder = "Shopping List" 
-          onChangeText = {itemInputHandler}
-          style = {styles.textInput}
-          value = {item}
-          />
-        <Button title = "ADD" onPress={addItemHandler}/>
-       </View>
+      <ItemInput placeholder="Shopping List" addItemHandler={addItemHandler}  ></ItemInput>
        <FlatList 
-          keyExtractor = {(item, index)=>item.key}  
           data = {list} 
           renderItem= {itemData=>(
-          <View style={styles.listItem}>
-            <Text>{itemData.item.value}</Text>
-          </View>
+            <Item item = {itemData.item.value} onDelete={console.info('DELETE')} />
           )}
         />
       </View>
@@ -42,21 +32,4 @@ const styles = StyleSheet.create({
   screen: {
     padding: 50
   },
-  inputContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-     alignItems: 'center' 
-    },
-  textInput: {
-    borderBottomColor: 'black', 
-    borderBottomWidth: 1, 
-    padding: 10, 
-    width: '80%'},
-  listItem: {
-    padding:10,
-    backgroundColor: '#ccc',
-    borderColor: 'black',
-    borderWidth: 1,
-    marginVertical: 4,
-  }
 })
